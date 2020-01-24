@@ -14,7 +14,6 @@ import (
 	"os"
 	"strconv"
     "time"
-    "os"
 
 	homedir "github.com/mitchellh/go-homedir"
 )
@@ -338,7 +337,7 @@ func areZero(bs []byte) bool {
 
 func main() {
     // run forever with sleep for n seconds
-    duration := int os.Getenv("DURATION")
+    duration := os.Getenv("DURATION")
     for {
 	    config = GetConfig()
 	    currentIPv4, currentIPv6 := CheckLocalIPs()
