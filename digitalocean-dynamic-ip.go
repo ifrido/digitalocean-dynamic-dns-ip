@@ -337,19 +337,21 @@ func areZero(bs []byte) bool {
 
 func main() {
     // run forever with sleep for n seconds
-    duration := os.Getenv("DURATION")
-    for {
-	    config = GetConfig()
-	    currentIPv4, currentIPv6 := CheckLocalIPs()
-	    if currentIPv4 == nil && currentIPv6 == nil {
-	    	log.Fatal("Current IP addresses are not valid, or both are disabled in the config. Check your configuration and internet connection.")
-	    }
-	    for _, domain := range config.Domains {
-	    	log.Printf("%s: START", domain.Domain)
-	    	UpdateRecords(domain, currentIPv4, currentIPv6)
-	    	log.Printf("%s: END", domain.Domain)
-	    }
-    }
+	duration, err := strconf.ParseInt(os.Getenv("DURATION"))
+	if err == nil {
+    	for {
+	    	config = GetConfig()
+	    	currentIPv4, currentIPv6 := CheckLocalIPs()
+	    	if currentIPv4 == nil && currentIPv6 == nil {
+	    		log.Fatal("Current IP addresses are not valid, or both are disabled in the config. Check your configuration and internet connection.")
+	    	}
+	    	for _, domain := range config.Domains {
+	    		log.Printf("%s: START", domain.Domain)
+	    		UpdateRecords(domain, currentIPv4, currentIPv6)
+	    		log.Printf("%s: END", domain.Domain)
+	    	}
+    	}
 
-    time.Sleep(time.Duration(duration)*time.Second)
+		time.Sleep(time.Duration(duration)*time.Second)
+	}
 }
