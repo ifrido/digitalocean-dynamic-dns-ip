@@ -344,8 +344,9 @@ func main() {
 				UpdateRecords(domain, currentIPv4, currentIPv6)
 				log.Printf("%s: END", domain.Domain)
 			}
+
+			log.Printf("sleeping for %d seconds befor next run", duration)
+			time.Sleep(time.Duration(duration) * time.Second)
 		}
-		log.Printf("sleeping for %d seconds befor next run", duration)
-		time.Sleep(time.Duration(duration) * time.Second)
 	}
 }
