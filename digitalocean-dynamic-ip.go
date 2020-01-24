@@ -337,7 +337,7 @@ func areZero(bs []byte) bool {
 
 func main() {
     // run forever with sleep for n seconds
-	duration, err := strconf.ParseInt(os.Getenv("DURATION"))
+	duration, err := strconv.ParseInt(os.Getenv("DURATION"))
 	if err == nil {
     	for {
 	    	config = GetConfig()
