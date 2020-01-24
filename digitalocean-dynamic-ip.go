@@ -76,8 +76,14 @@ type DOResponse struct {
 
 //GetConfig : get configuration file ~/.digitalocean-dynamic-ip.json
 func GetConfig() ClientConfig {
-	cmdHelp := flag.Bool("h", false, "Show the help message")
-	cmdHelp2 := flag.Bool("help", false, "Show the help message")
+	if flag.Lookup("h") == nil {
+		cmdHelp := flag.Bool("h", false, "Show the help message")
+	}
+
+	if flag.Lookup("help") == nil {
+		cmdHelp2 := flag.Bool("help", false, "Show the help message")
+	}
+
 	flag.Parse()
 
 	if *cmdHelp || *cmdHelp2 {
@@ -338,6 +344,7 @@ func areZero(bs []byte) bool {
 func main() {
 	// run forever with sleep for n seconds
 	duration, err := strconv.ParseInt(os.Getenv("DURATION"), 10, 64)
+
 	if err == nil {
 		for {
 			config = GetConfig()
